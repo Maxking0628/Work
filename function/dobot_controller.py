@@ -53,7 +53,7 @@ class DobotController:
 
         dType.SetEMotor(self.api, 0, 1, 12500, 1)
         dType.SetWAITCmd(self.api, 4850, isQueued=1)
-        dType.SetEMotor(self.api, 0, 1, 0, 1)
+        # dType.SetEMotor(self.api, 0, 1, 0, 1)
         dType.SetWAITCmd(self.api, 100, isQueued=1)
         dType.SetPTPCmd(self.api, dType.PTPMode.PTPMOVJXYZMode, obj_x, obj_y, 50, 0, 1)
         dType.SetPTPCmd(self.api, dType.PTPMode.PTPMOVJXYZMode, obj_x, obj_y, hei_z, 0, 1)
@@ -87,12 +87,17 @@ class DobotController:
         """輸送帶運行函數"""
         dType.SetEMotor(self.api, 0, 1, 12500, 1)
         dType.SetWAITCmd(self.api, 4850, isQueued=1)
-        dType.SetEMotor(self.api, 0, 1, 0, 1)
+        # dType.SetEMotor(self.api, 0, 1, 0, 1)
         lastIndex = dType.SetWAITCmd(self.api, 100, isQueued=1)
         self._work(lastIndex)
     
     def disconnect(self):
         """斷開Dobot連接"""
         if self.api:
+            print("🔌 正在斷開 Dobot 連接...")
+            # 停止輸送帶
+            dType.SetEMotor(self.api, 0, 1, 0, 1)
+            
             dType.SetQueuedCmdStopExec(self.api)
             dType.DisconnectDobot(self.api)
+            print("✅ Dobot 已斷開連接")

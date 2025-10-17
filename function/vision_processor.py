@@ -12,7 +12,7 @@ class VisionProcessor:
     
     def _load_mask(self):
         """載入遮罩圖片"""
-        self.img_mask = cv2.imread("mask.png")
+        self.img_mask = cv2.imread("mask_v4.png")
         if self.img_mask is None:
             print("無法載入 mask2.png，檢查文件是否存在")
     
@@ -29,7 +29,7 @@ class VisionProcessor:
             print("攝影機讀取失敗")
             return None, [], []
         
-        print("原始影像尺寸:", cap_input.shape)
+        # print("原始影像尺寸:", cap_input.shape)
         
         # 應用遮罩
         if self.img_mask is not None:
@@ -37,7 +37,7 @@ class VisionProcessor:
         else:
             cap_mask = cap_input.copy()
         
-        print("遮罩後影像尺寸:", cap_mask.shape)
+        # print("遮罩後影像尺寸:", cap_mask.shape)
         
         # 處理HSV並找出contours
         hsv = cv2.cvtColor(cap_mask, cv2.COLOR_BGR2HSV)
